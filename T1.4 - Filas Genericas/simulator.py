@@ -70,11 +70,10 @@ class Simulator:
             if target_queue:
                 self.arrival(event_time, target_queue, is_external=False)
 
-    def run(self, default_first_arrival: float, explicit_arrivals: dict):
+    def run(self, initial_arrivals: dict):
         for q_name, q in self.queues.items():
-            if q.min_arrival is not None:
-                first_arrival = explicit_arrivals.get(q_name, default_first_arrival)
-                self.schedule(first_arrival, 'ARRIVAL', q_name)
+            if q.min_arrival is not None and q_name in initial_arrivals:
+                self.schedule(initial_arrivals[q_name], 'ARRIVAL', q_name)
 
         while self.gcl.remaining > 0 and len(self.scheduler) > 0:
             self.scheduler.sort(key=lambda x: x[0])

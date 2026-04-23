@@ -88,8 +88,6 @@ def main():
         
     model_path = sys.argv[1]
     
-    tempo_chegada_inicial = 2.0
-
     arrivals, queues, routing, seeds, rnd_per_seed = parse_yaml_config(model_path)
     
     total_global_time = 0.0
@@ -104,7 +102,7 @@ def main():
             q.reset_queue()
             
         simulator = Simulator(gcl, queues, routing)
-        simulator.run(default_first_arrival=tempo_chegada_inicial, explicit_arrivals=arrivals)
+        simulator.run(initial_arrivals=arrivals)
         
         for q in queues.values():
             q.accumulate_stats()
