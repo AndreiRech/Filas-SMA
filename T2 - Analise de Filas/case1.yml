@@ -1,0 +1,46 @@
+!PARAMETERS
+arrivals: 
+  APLICACAO: 2.0
+
+queues: 
+   APLICACAO: 
+      servers: 2
+      capacity: 5
+      minArrival: 2.0
+      maxArrival: 6.0
+      minService: 2.5
+      maxService: 9.0
+   CACHE: 
+      servers: 1
+      capacity: 5
+      minService: 0.5
+      maxService: 2.0
+   API: 
+      servers: 3
+      capacity: 20
+      minService: 5.0
+      maxService: 18.0
+
+network: 
+-  source: APLICACAO
+   target: CACHE
+   probability: 0.6
+-  source: APLICACAO
+   target: API
+   probability: 0.2
+-  source: CACHE
+   target: API
+   probability: 0.7
+-  source: CACHE
+   target: APLICACAO
+   probability: 0.1
+-  source: API
+   target: CACHE
+   probability: 0.8
+-  source: API
+   target: APLICACAO
+   probability: 0.2
+
+rndnumbersPerSeed: 100000
+seeds: 
+- 9013
